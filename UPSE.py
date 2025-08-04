@@ -79,7 +79,7 @@ def final_evaluation(state: UPSEState):
     return {'overall_feedback': overall_feedback, 'avg_score': avg_score}
 
 
-# Check quality node - this is the key fix!
+
 def check_quality(state: UPSEState):
     """Check quality node that returns state updates, not routing decisions"""
     print(f"🔍 Quality Check: Score = {state['avg_score']:.2f}, Iteration = {state['iteration_count']}")
@@ -120,7 +120,7 @@ Return only the improved essay."""
     return {
         "essay": improved,
         "iteration_count": state.get("iteration_count", 0) + 1,
-        # Reset individual scores for next iteration
+       
         "individual_scores": [],
         "language_feedback": "",
         "clarity_feedback": "",
@@ -139,23 +139,14 @@ graph.add_node('final_evaluation', final_evaluation)
 graph.add_node('check_quality', check_quality)
 graph.add_node('improve_essay', improve_essay)
 
-# Flow exactly as shown in the diagram
-# START -> evaluate_COT  
+# Connat all nodes through edges
+
 graph.add_edge(START, 'evaluate_COT')
-
-# evaluate_COT -> evaluate_analysis
 graph.add_edge('evaluate_COT', 'evaluate_analysis')
-
-# evaluate_analysis -> evaluate_language
 graph.add_edge('evaluate_analysis', 'evaluate_language')
-
-# evaluate_language -> final_evaluation
 graph.add_edge('evaluate_language', 'final_evaluation')
-
-# final_evaluation -> check_quality
 graph.add_edge('final_evaluation', 'check_quality')
 
-# Conditional edges from check_quality
 graph.add_conditional_edges(
     'check_quality',
     should_continue,  # This function determines the routing
@@ -165,7 +156,6 @@ graph.add_conditional_edges(
     }
 )
 
-# improve_essay -> evaluate_COT (completing the cycle)
 graph.add_edge('improve_essay', 'evaluate_COT')
 
 # Compile the workflow
