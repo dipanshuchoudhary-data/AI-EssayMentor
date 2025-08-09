@@ -38,4 +38,5 @@ Premium Plan → Pass through Improve Essay Node (up to 3 iterations)
 End Node returns results in JSON format
 
 * The feature of subscription is available in UPSE 2.0 folder.
+To visualize the workflow and understand how the nodes and edges interact, see the UPSE.ipynb file.
 
