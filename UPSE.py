@@ -5,6 +5,7 @@ from typing import TypedDict, List
 from typing_extensions import Annotated
 import operator
 import json
+import re
 
 load_dotenv()
 import os 
@@ -39,18 +40,22 @@ class UPSEState(TypedDict):
     threshold_score: float
 
 
+def json_string(raw_str):
+    cleaned = re.sub(r'[\x00-\x1F]+', ' ', raw_str)
+    return cleaned
+
 def llm_json(old_output):
-    if isinstance(old_output,str):
+    if isinstance(old_output, str):
+        cleaned_output = json_string(old_output)  # sanitize control chars
         try:
-            once = json.loads(old_output)
-            if isinstance(once,str):
+            once = json.loads(cleaned_output)
+            if isinstance(once, str):
                 once = json.loads(once)
             return once
-
         except json.JSONDecodeError:
-            raise ValueError(f"Invaild JSON from model :{old_output}")
-        
+            raise ValueError(f"Invalid JSON from model after sanitizing: {cleaned_output}")
     return old_output
+
 
 
 def evaluate_language(state: UPSEState):
@@ -314,5 +319,4 @@ workflow = graph.compile()
 #         print(f"\n Overall Feedback:\n{output['overall_feedback']}")
 #         print(f"\n Final Essay:\n{output['essay']}")
 
-        
-
+    
