@@ -1,42 +1,18 @@
-UPSC Essay Evaluation Workflow (LangGraph)
-This project uses LangGraph to implement a modular, node-based essay evaluation system for UPSC (Union Public Service Commission) aspirants. The system evaluates essays, provides detailed feedback, and—depending on subscription plans—can improve essays through iterative LLM-based enhancements.
+UPSE Essay  2.0 — Subscription Tier Feature
+Overview
+UPSE 2.0 introduces a subscription tier system to the Essay Evaluator platform, empowering users with customizable access levels for AI-driven essay evaluation and improvement. This enhancement optimizes user experience by providing tiered feedback options, ranging from free basic checks to premium in-depth analyses.
 
 Features
-Node-based LangGraph workflow for clarity and maintainability
+Subscription Tiers:
 
-Evaluation nodes for:
+Free: Quick, fundamental feedback on language and clarity.
 
-Language quality
+Basic: Detailed feedback including language quality, clarity, and analytical insights with up to 2 improvement iterations.
 
-Clarity of thought
+Premium: Full-featured evaluation with deep analysis and up to 4 iterative improvements for professional-level refinement.
 
-Analytical depth
+Dynamic UI:
 
-Dynamic scoring thresholds per subscription tier
+Tier selection cards with intuitive focus and selection effects.
 
-Optional improvement branch triggered after evaluation
-
-Structured JSON outputs for seamless integration
-
-Subscription-aware iterations (Basic vs Premium) *
-
-How It Works (LangGraph Flow)
-User submits an essay → Start Node
-
-Essay flows through Language Evaluation, Clarity Evaluation, and Analysis Evaluation nodes
-
-Aggregate Score Node calculates final score and produces overall feedback
-
-If score < plan threshold:
-
-Free Plan → End
-
-Basic Plan → Pass through Improve Essay Node (1 iteration)
-
-Premium Plan → Pass through Improve Essay Node (up to 3 iterations)
-
-End Node returns results in JSON format
-
-* The feature of subscription is available in UPSE 2.0 folder.
-To visualize the workflow and understand how the nodes and edges interact, see the UPSE.ipynb file.
-
+“Run Evalaute” button activation tied to tier selection and essay input validation.
